@@ -41,9 +41,9 @@ public class JournalEntryControllerV2 {
         try {
 
             journalEntryService.saveEntry(myEntry, userName);
-            return new ResponseEntity<>(myEntry, HttpStatus.OK);
+            return new ResponseEntity<>(myEntry, HttpStatus.CREATED);
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -51,9 +51,9 @@ public class JournalEntryControllerV2 {
     public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId myId){
         Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
         if(journalEntry.isPresent()){
-            return new ResponseEntity<>(journalEntry.get(), HttpStatus.CREATED);
+            return new ResponseEntity<>(journalEntry.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("id/{userName}/{myId}")
